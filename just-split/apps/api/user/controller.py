@@ -26,7 +26,12 @@ def testing_api():
         'username':user.user_name,
         'profile_image':user.profile_image
     }
-    return data
+    response = jsonify({
+                'status': 'SUCCESS',
+                'code': 200,
+                'message': 'Testing Api',
+                'data':data
+            }), 200
 
 
 def create_user():
