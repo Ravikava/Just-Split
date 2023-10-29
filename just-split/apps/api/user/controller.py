@@ -29,7 +29,7 @@ def testing_api():
     response = jsonify({
                 'status': 'SUCCESS',
                 'code': 200,
-                'message': 'Testing Api',
+                'message': 'Testing Api with data',
                 'data':data
             }), 200
 
