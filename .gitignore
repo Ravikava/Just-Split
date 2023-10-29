@@ -2,3 +2,8 @@ env/
 .env
 export.sh
 __pycache__
+.env.swo
+.env.swp
+gunicorn_config.py
+nohup.out
+wsgi.py
