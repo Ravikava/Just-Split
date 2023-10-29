@@ -32,6 +32,7 @@ def testing_api():
                 'message': 'Testing Api with data',
                 'data':data
             }), 200
+    return response
 
 
 def create_user():
