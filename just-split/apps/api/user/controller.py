@@ -41,21 +41,33 @@ def create_user():
         params = request.form
         
         try:
-            user = db.session.query(User.id).filter(User.email == params.get('email')).first()
+            user = db.session.query(User).filter(User.email == params.get('email')).first()
 
             auth_token = create_access_token(identity=user.id, fresh=True)
             refresh_token = create_refresh_token(user.id)
             
+            user_data = {
+                'id':user.id,
+                'name':user.name,
+                'user_name':user.user_name,
+                'profile_image':user.profile_image,
+                'email':user.email,
+                'dob':user.dob,
+                'current_currency':user.current_currency,
+                'device_id':user.device_ids,
+                'created_at':str(user.created_at),
+            }
+            
             response = jsonify({
                 'status': 'SUCCESS',
-                'code': 200,
-                'message': 'User Logged In SuccessFully ...',
+                'code': 302,
+                'message': 'User Already Exist',
                 'data':{
                     'token':auth_token,
                     'refresh_token':refresh_token,
-                    'user_id':user.id,
+                    'user_data':user_data
                     }
-            }), 200
+            }), 302
         except:
             image = upload_image(request.files['image'])
             device_id = []
@@ -88,9 +100,13 @@ def create_user():
             user_data = {
                 'id':user.id,
                 'name':user.name,
+                'user_name':user.user_name,
                 'profile_image':user.profile_image,
                 'email':user.email,
+                'dob':user.dob,
+                'current_currency':user.current_currency,
                 'device_id':user.device_ids,
+                'created_at':str(user.created_at)
             }
             
             response = jsonify({
@@ -100,7 +116,7 @@ def create_user():
                 'data':{
                     'token':auth_token,
                     'refresh_token':refresh_token,
-                    'user_id':user_data,
+                    'user_data':user_data,
                     }
             }), 200
         
@@ -559,7 +575,10 @@ Your Friends at JustSplit.
                     'user_name':user.user_name,
                     'profile_image':user.profile_image,
                     'email':user.email,
+                    'dob':user.dob,
+                    'current_currency':user.current_currency,
                     'device_id':user.device_ids,
+                    'created_at':str(user.created_at),
                 }
                 message = 'User Already Exists'
                 response = jsonify({
@@ -569,6 +588,7 @@ Your Friends at JustSplit.
                     'data':{
                         'user' : user_data,
                         'token':auth_token,
+                        'refresh_token':refresh_token,
                         'otp':otp_num
                     }
                 }), 200
