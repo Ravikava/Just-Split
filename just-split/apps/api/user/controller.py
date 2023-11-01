@@ -65,7 +65,7 @@ def create_user():
                 'data':{
                     'token':auth_token,
                     'refresh_token':refresh_token,
-                    'user_data':user_data
+                    'user':user_data
                     }
             }), 302
         except:
@@ -116,7 +116,7 @@ def create_user():
                 'data':{
                     'token':auth_token,
                     'refresh_token':refresh_token,
-                    'user_data':user_data,
+                    'user':user_data,
                     }
             }), 200
         
