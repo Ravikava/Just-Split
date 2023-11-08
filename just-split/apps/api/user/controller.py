@@ -247,9 +247,12 @@ def update_user():
         
         user = db.session.query(User).filter(User.id == user_id).first()
         
-        user.name = params.get('name')
+        if params.get('name'):
+            user.name = params.get('name')
+
         user.current_currency = params.get('current_currency','INR',type=str)
-        user.user_name = params.get('user_name')
+        if params.get('user_name'):
+            user.user_name = params.get('user_name')
         
         if params.get('email'):
             user.email = params.get('email')
