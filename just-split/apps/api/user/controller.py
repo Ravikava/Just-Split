@@ -191,17 +191,21 @@ def suggest_usernames():
         else:
             user = db.session.query(User).filter(User.id == user_id).first()
             if user.name != None or user.name != '':
-                name = user.name.split(' ')
+                    if ' ' in user.name:
+                        name = user.name.split(' ')
+                    else:
+                        name = None
             email = user.email.split('@')
-            
-            suggestions.append(f"{name[0].lower()}{name[1].lower()}")
+            if name:
+                suggestions.append(f"{name[0].lower()}{name[1].lower()}")
             suggestions.append(f"{email[0]}")
             
-            if len(name) >= 2:
-                first_name, last_name = name[0], name[-1]
-                suggestions.append(f"{last_name[0].lower()}{first_name.lower()}")
-                suggestions.append(f"{first_name.lower()}{last_name[0].lower()}")
-
+            if name:
+                if len(name) >= 2:
+                    first_name, last_name = name[0], name[-1]
+                    suggestions.append(f"{last_name[0].lower()}{first_name.lower()}")
+                    suggestions.append(f"{first_name.lower()}{last_name[0].lower()}")
+                
             for _ in range(4):
                 randon_number = random.randint(111,999)
                 numbered_username = f"{username}{randon_number}"
