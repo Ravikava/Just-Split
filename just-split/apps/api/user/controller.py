@@ -603,11 +603,26 @@ Your Friends at JustSplit.
                     }
                 }), 200
             else:
+                user_data = {
+                    "id": None,
+                    "name": None,
+                    "user_name": None,
+                    "profile_image": None,
+                    "phone_number": None,
+                    "email": None,
+                    "dob": None,
+                    "current_currency": None,
+                    "device_id": None,
+                    "created_at": None,
+                }
                 response = jsonify({
                 'status': 'Not Found',
                 'code': 404,
                 'message': 'User Not Found',
                 'data':{
+                    'user' : user_data,
+                    'token':None,
+                    'refresh_token':None,
                     'otp':otp_num
                 }
             }), 404
