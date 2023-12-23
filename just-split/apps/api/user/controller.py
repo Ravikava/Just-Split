@@ -688,6 +688,52 @@ def log_out():
     return response
 
 
+def get_all_users():
+    try:
+        """
+        get all user's data from user table
+        """
+        
+        users = db.session.query(User).all()
+        
+        user_data = [
+                {
+                    'id': user.id,
+                    'name':user.name,
+                    'user_name':user.user_name,
+                    'profile_image':user.profile_image,
+                    'email':user.email,
+                    'phone_number':user.phone_number,
+                    'dob':user.dob,
+                    'friends':user.friends,
+                    'Group':user.Group,
+                    'current_currency':user.current_currency,
+                    'all_currency_used':user.all_currency_used,
+                    'device_ids':user.device_ids,
+                    'created_at':str(user.created_at),
+                    'updated_at':str(user.updated_at),
+                } for user in users
+            ]
+        
+        response = jsonify({
+            'status': 'SUCCESS',
+            'code': 200,
+            'message': "Get All Users Data",
+            'data':user_data
+        }), 200
+        
+    except Exception as e:
+        print(f"\n\n\n Error {e} \n\n\n")
+        response = jsonify({
+            'status': 'ERROR',
+            'code': 910,
+            'message': f'Error {e}'
+        }), 500
+        
+    finally:
+        db.session.close()
+        
+    return response
 
 def upload_image(image):
     # image = request.files['image']
