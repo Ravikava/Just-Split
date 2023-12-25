@@ -735,6 +735,34 @@ def get_all_users():
         
     return response
 
+def delete_users():
+    try:
+        params = request.json
+        user_ids = params['users']
+        
+        if user_ids != []:
+            del_user = db.session.query(User).filter(User.id.in_(user_ids)).delete()
+            db.session.commit()
+        
+        response = jsonify({
+            'status': 'SUCCESS',
+            'code': 200,
+            'message': "User Deleted SuccessFully",
+        }), 200
+        
+    except Exception as e:
+        print(f"\n\n\n Error {e} \n\n\n")
+        response = jsonify({
+            'status': 'ERROR',
+            'code': 910,
+            'message': f'Error {e}'
+        }), 500
+        
+    finally:
+        db.session.close()
+        
+    return response
+
 def upload_image(image):
     # image = request.files['image']
     # Generate file

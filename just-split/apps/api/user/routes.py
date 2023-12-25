@@ -3,7 +3,7 @@ from apps.api.user.controller import (
     email_verification,upload_image,create_user,
     update_user,suggest_usernames,current_email_verification,
     new_email_verification,get_user_profile,search_user,
-    get_all_users,log_out,testing_api
+    get_all_users,delete_users,log_out,testing_api
 )
 
 app.add_url_rule(
@@ -44,6 +44,10 @@ app.add_url_rule(
 
 app.add_url_rule(
     '/get_all_users/', 'get_all_users', get_all_users, methods=['GET']
+    )
+
+app.add_url_rule(
+    '/delete_users/', 'delete_users', delete_users, methods=['POST']
     )
 
 app.add_url_rule(

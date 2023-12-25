@@ -34,8 +34,8 @@ class FriendRequest(BaseModel):
     __tablename__ = 'friend_request'
 
     id = db.Column(db.Integer, primary_key=True)
-    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
+    receiver_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
     friendship_status = db.Column(db.Boolean, default=False)
     request_status = db.Column(db.String(20)) # ( pending,accepted,rejected )
     created_at = db.Column(db.DateTime, server_default=func.now())
@@ -50,7 +50,7 @@ class Group(BaseModel):
     __tablename__ = 'group'
     
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
     group_name = db.Column(db.String(50),nullable=False)
     group_image = db.Column(db.String(256))
     group_description =db.Column(db.String(256))
@@ -79,7 +79,7 @@ class Exepense(BaseModel):
     expense_comment = db.Column(db.String(256))
     payer = db.Column(pg.ARRAY(pg.JSONB()))
     payee = db.Column(pg.ARRAY(pg.JSONB()))
-    group_id = db.Column(db.Integer, db.ForeignKey('group.id'))
+    group_id = db.Column(db.Integer, db.ForeignKey('group.id', ondelete='CASCADE'))
     is_deleted = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, server_default=func.now())
     updated_at = db.Column(db.DateTime, server_default=func.now())
@@ -97,7 +97,7 @@ class ExpenseSnapShot(BaseModel):
     __tablename__ = 'expense_snapshot'
     
     id = db.Column(db.Integer, primary_key=True)
-    expense_id = db.Column(db.Integer, db.ForeignKey('expense.id'))
+    expense_id = db.Column(db.Integer, db.ForeignKey('expense.id', ondelete='CASCADE'))
     expense_snapshots = db.Column(pg.ARRAY(pg.JSONB()))
     created_at = db.Column(db.DateTime, server_default=func.now())
     updated_at = db.Column(db.DateTime, server_default=func.now())
@@ -110,7 +110,7 @@ class UserLogin(BaseModel):
     
     id = db.Column(db.Integer, primary_key=True)
     
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
     device_id = db.Column(db.String(100), nullable=False)
     device_name = db.Column(db.String(100), nullable=True)
     logged_in_status = db.Column(db.Boolean, default=False)
