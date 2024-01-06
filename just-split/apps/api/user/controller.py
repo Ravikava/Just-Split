@@ -70,7 +70,7 @@ def create_user():
                     }
             }), 302
         except:
-            image = upload_image(request.files['image'])
+            image = upload_image(request.files['profile_image'])
             device_id = []
             device_id.append(params.get('device_id'))
             user = User(
@@ -127,8 +127,8 @@ def create_user():
         print(f"\n\n\n Error {e} \n\n\n")
         response = jsonify({
             'status': 'ERROR',
-            'code': 910,
-            'message': f'Error {e} while creating user.'
+            'code': 500,
+            'message': f'Error {str(e)} while creating user.'
         }), 500
     finally:
         db.session.close()
@@ -230,8 +230,8 @@ def suggest_usernames():
         print(f"\n\n\n Error {e} \n\n\n")
         response = jsonify({
             'status': 'ERROR',
-            'code': 910,
-            'message': f'Error {e} while creating user.'
+            'code': 500,
+            'message': f'Error {str(e)} while creating user.'
         }), 500
     finally:
         db.session.close()
@@ -249,7 +249,8 @@ def update_user():
         
         if params.get('name'):
             user.name = params.get('name')
-
+        print(f"\n\n\n user_id {user.id} \n\n\n")
+        print(f"\n\n\n current_currency {user.current_currency} \n\n\n")
         user.current_currency = params.get('current_currency','INR',type=str)
         if params.get('user_name'):
             user.user_name = params.get('user_name')
@@ -503,7 +504,7 @@ The Just Split Team
         response = jsonify({
             'status': 'ERROR',
             'code': 500,
-            'message': message
+            'message': str(message)
         }), 500
     finally:
         db.session.close()
@@ -634,7 +635,7 @@ Your Friends at JustSplit.
             response = jsonify({
                 'status': 'ERROR',
                 'code': 500,
-                'message': f'Error {e}'
+                'message': f'Error {str(e)}'
             }), 500
         
     except Exception as e:
@@ -642,7 +643,7 @@ Your Friends at JustSplit.
         response = jsonify({
             'status': 'ERROR',
             'code': 500,
-            'message': f'Error {e}'
+            'message': f'Error {str(e)}'
         }), 500
     finally:
         db.session.close()
@@ -678,8 +679,8 @@ def log_out():
         print(f"\n\n\n Error {e} \n\n\n")
         response = jsonify({
             'status': 'ERROR',
-            'code': 910,
-            'message': f'Error {e}'
+            'code': 500,
+            'message': f'Error {str(e)}'
         }), 500
         
     finally:
@@ -726,8 +727,8 @@ def get_all_users():
         print(f"\n\n\n Error {e} \n\n\n")
         response = jsonify({
             'status': 'ERROR',
-            'code': 910,
-            'message': f'Error {e}'
+            'code': 500,
+            'message': f'Error {str(e)}'
         }), 500
         
     finally:
@@ -754,8 +755,8 @@ def delete_users():
         print(f"\n\n\n Error {e} \n\n\n")
         response = jsonify({
             'status': 'ERROR',
-            'code': 910,
-            'message': f'Error {e}'
+            'code': 500,
+            'message': f'Error {str(e)}'
         }), 500
         
     finally:
